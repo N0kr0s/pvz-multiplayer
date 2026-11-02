@@ -7,12 +7,17 @@ extern "C" void WINAPI Start() {
         fail("Launch using the original Plants vs. Zombies Steam entry (AppID 3590), with steam-launch.sh in Launch Options. Do not add this loader as a non-Steam game.");
         ExitProcess(1);
     }
+    char testInstance[16]={};
+    bool testMode=GetEnvironmentVariableA("PVZMP_TEST_INSTANCE",testInstance,sizeof(testInstance)) &&
+        (!lstrcmpA(testInstance,"host") || !lstrcmpA(testInstance,"client"));
     char directory[MAX_PATH], dll[MAX_PATH], exe[MAX_PATH];
     static char command[32768];
     GetModuleFileNameA(0,directory,MAX_PATH);
     char* last=directory; for(char* p=directory;*p;++p) if(*p=='\\' || *p=='/') last=p;
     *last=0;
     lstrcpyA(dll,directory); lstrcatA(dll,"\\pvzmp-hook.dll");
+    // Always use the widescreen launcher: it applies runtime display patches.
+    // Test instances isolate the prefix, not the executable launch chain.
     lstrcpyA(exe,directory); lstrcatA(exe,"\\..\\..\\PlantsVsZombies.exe");
     lstrcpyA(command,"\""); lstrcatA(command,exe); lstrcatA(command,"\"");
     // Preserve Steam's game arguments, including legacy PopCap Steam parameters.
@@ -26,7 +31,9 @@ extern "C" void WINAPI Start() {
     if(GetFileAttributesA(dll)==INVALID_FILE_ATTRIBUTES) { fail("pvzmp-hook.dll is missing."); ExitProcess(1); }
     STARTUPINFOA startup={}; startup.cb=sizeof(startup); PROCESS_INFORMATION process={};
     char gameDir[MAX_PATH]; lstrcpyA(gameDir,directory); lstrcatA(gameDir,"\\..\\..");
-    char logPath[MAX_PATH]; lstrcpyA(logPath,gameDir); lstrcatA(logPath,"\\pvzmp-hook.log");
+    char logPath[MAX_PATH]; lstrcpyA(logPath,gameDir); lstrcatA(logPath,"\\pvzmp-");
+    if(testMode){lstrcatA(logPath,"test-");lstrcatA(logPath,testInstance);}else lstrcatA(logPath,"hook");
+    lstrcatA(logPath,".log");
     SetEnvironmentVariableA("PVZMP_LOG_PATH",logPath);
     if(!CreateProcessA(exe,command,0,0,FALSE,0,0,gameDir,&startup,&process)) {
         fail("Could not start PlantsVsZombies.exe."); ExitProcess(1);
