@@ -1,0 +1,35 @@
+{
+  "sha256": "3be7c42d3fc51ea3310ba24d689763ab925aa539885a8800b45e8011db92d3fb",
+  "tracks": [
+    {
+      "track": "SelectorScreen_Survival_button",
+      "vertical_shift": 0.0,
+      "keys": 13
+    },
+    {
+      "track": "SelectorScreen_Survival_shadow",
+      "vertical_shift": 0.0,
+      "keys": 13
+    },
+    {
+      "track": "SelectorScreen_Challenges_button",
+      "vertical_shift": 25.32,
+      "keys": 13
+    },
+    {
+      "track": "SelectorScreen_Challenges_shadow",
+      "vertical_shift": 25.32,
+      "keys": 13
+    },
+    {
+      "track": "SelectorScreen_ZenGarden_button",
+      "vertical_shift": 46.47,
+      "keys": 13
+    },
+    {
+      "track": "SelectorScreen_ZenGarden_shadow",
+      "vertical_shift": 46.47,
+      "keys": 13
+    }
+  ]
+}

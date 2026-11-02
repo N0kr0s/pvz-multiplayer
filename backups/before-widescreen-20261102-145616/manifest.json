@@ -1,0 +1,40 @@
+{
+  "archive_sha256": "f51f73fc1e6e4bea38fd444258c1042b756abc0491a32d0fc5b2c82d12b22d5d",
+  "files": [
+    {
+      "path": "properties/partner.xml",
+      "existed": true,
+      "installed_sha256": "9d1b902216e08933bee8b6aab7353a2a011f4650dc916f1fb867d2c5db880b26"
+    },
+    {
+      "path": "properties/partner.xml.sig",
+      "existed": true,
+      "installed_sha256": "e59e7b89a543d3b32b85c2da43744217ce20a37081342860e2cf5bede2c5260b"
+    },
+    {
+      "path": "properties/partner_logo.jpg",
+      "existed": true,
+      "installed_sha256": "8bea233c40ddf74decf3ddd0a3d4cef8e1229ca3a756384e78d319aca0b63113"
+    },
+    {
+      "path": "eula.txt",
+      "existed": false,
+      "installed_sha256": "48696f86c14f9afa5e615083dfaf1ca3984bc84be88229596fd28c5a26772dbb"
+    },
+    {
+      "path": "main.pak",
+      "existed": true,
+      "installed_sha256": "2137f1c06daf0af1d410eb906cb1d60f06df3ba6a1f711378504a476ccc97010"
+    },
+    {
+      "path": "PlantsVsZombies.exe",
+      "existed": true,
+      "installed_sha256": "9d22f5d1bfb45f3e744fb4495a72b2b3b7068a8e02aa2aca057588c91fac937d"
+    },
+    {
+      "path": "pvzgame.exe",
+      "existed": false,
+      "installed_sha256": "5d8a46a2ba095c8539693234dc88da4c2c2ef901a404020721a49c5beaac0eab"
+    }
+  ]
+}

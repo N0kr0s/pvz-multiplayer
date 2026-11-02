@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PvZ Multiplayer — LAN prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header><h1>Plants vs. Zombies <span>Multiplayer</span></h1><p>LAN · растения против зомби</p></header>
+    <section id="lobby" class="panel">
+      <h2>Подключение</h2>
+      <p>Хост открывает эту страницу и выбирает растения. Второй игрок вводит IP и порт хоста в браузере своего компьютера, затем выбирает зомби.</p>
+      <div class="roles"><button id="plantRole">Играть за растения · хост</button><button id="zombieRole">Играть за зомби · клиент</button></div>
+      <p id="address"></p>
+    </section>
+    <section id="match" hidden>
+      <div class="status"><strong id="role"></strong><span id="resources"></span><span id="timer"></span></div>
+      <p id="notice">Ожидание игрока</p>
+      <div id="cards" class="cards"></div>
+      <canvas id="board" width="900" height="500" aria-label="Поле боя"></canvas>
+      <p class="hint">Выберите карту и нажмите на клетку. Растения доступны в столбцах 1–7, могилы и фермы — в столбцах 7–8. Зомби выходят справа.</p>
+    </section>
+    <footer>Прототип правил. Оригинальный PlantsVsZombies.exe запускается отдельно.</footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

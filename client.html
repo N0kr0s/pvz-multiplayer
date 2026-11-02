@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PvZ Multiplayer — подключение</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header><h1>Plants vs. Zombies <span>Multiplayer</span></h1><p>Подключиться к хосту по LAN</p></header>
+    <form class="panel" id="connect">
+      <h2>Клиент</h2>
+      <label>IP хоста <input id="ip" required placeholder="192.168.1.100" pattern="[0-9.]+"></label>
+      <label>Порт <input id="port" required type="number" min="1" max="65535" placeholder="8097"></label>
+      <div class="roles"><button>Подключиться</button></div>
+    </form>
+  </main>
+  <script>
+    document.querySelector('#connect').addEventListener('submit', event => {
+      event.preventDefault();
+      const ip = document.querySelector('#ip').value.trim();
+      const port = Number(document.querySelector('#port').value);
+      if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(ip) || ip.split('.').some(x => Number(x)>255) || port<1 || port>65535) {
+        alert('Проверьте IP и порт'); return;
+      }
+      location.href = `http://${ip}:${port}/`;
+    });
+  </script>
+</body>
+</html>
