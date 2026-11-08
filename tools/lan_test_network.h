@@ -24,7 +24,9 @@ inline int close(int fd){std::lock_guard<std::mutex> g(guard);if(!valid(fd))retu
 inline int fcntl(int,int,...){return 0;}
 inline int bind(int fd,const sockaddr* address,socklen_t){
     std::lock_guard<std::mutex> g(guard);if(!valid(fd))return -1;
-    unsigned short p=ntohs(((const sockaddr_in*)address)->sin_port);fds[fd].port=p?p:nextPort++;return 0;
+    unsigned short p=ntohs(((const sockaddr_in*)address)->sin_port);
+    if(p)for(unsigned i=10;i<fds.size();++i)if((int)i!=fd && fds[i].open && fds[i].port==p){errno=EADDRINUSE;return -1;}
+    fds[fd].port=p?p:nextPort++;return 0;
 }
 inline int listen(int fd,int){std::lock_guard<std::mutex> g(guard);if(!valid(fd))return -1;fds[fd].listening=true;return 0;}
 inline int getsockname(int fd,sockaddr* address,socklen_t*){

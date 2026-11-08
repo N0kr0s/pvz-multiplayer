@@ -7,6 +7,42 @@ WINE REGISTRY Version 2
 #time=1dd580242a87638
 @=""
 
+[Console] 1793633957
+#time=1dd6ae052715df0
+"CloseOnExit"=dword:00000001
+"ColorTable00"=dword:00000000
+"ColorTable01"=dword:00800000
+"ColorTable02"=dword:00008000
+"ColorTable03"=dword:00808000
+"ColorTable04"=dword:00000080
+"ColorTable05"=dword:00800080
+"ColorTable06"=dword:00008080
+"ColorTable07"=dword:00c0c0c0
+"ColorTable08"=dword:00808080
+"ColorTable09"=dword:00ff0000
+"ColorTable10"=dword:0000ff00
+"ColorTable11"=dword:00ffff00
+"ColorTable12"=dword:000000ff
+"ColorTable13"=dword:00ff00ff
+"ColorTable14"=dword:0000ffff
+"ColorTable15"=dword:00ffffff
+"CursorSize"=dword:00000019
+"CursorVisible"=dword:00000001
+"EditionMode"=dword:00000000
+"FaceName"="Courier New"
+"FontFamily"=dword:00000036
+"FontSize"=dword:00100008
+"FontWeight"=dword:00000190
+"HistoryBufferSize"=dword:00000032
+"HistoryNoDup"=dword:00000000
+"InsertMode"=dword:00000001
+"MenuMask"=dword:00000000
+"PopupColors"=dword:000000f5
+"QuickEdit"=dword:00000000
+"ScreenBufferSize"=dword:00960050
+"ScreenColors"=dword:0000000f
+"WindowSize"=dword:00190050
+
 [Control Panel\\Accessibility\\AudioDescription] 1791559458
 #time=1dd5802406d1a22
 "Locale"=dword:00000000
@@ -125,8 +161,8 @@ WINE REGISTRY Version 2
   00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
   00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
 
-[Control Panel\\International] 1793632162
-#time=1dd6adc247cecb0
+[Control Panel\\International] 1793634591
+#time=1dd6ae1cbfb1a98
 "iCalendarType"="1"
 "iCountry"="1"
 "iCurrDigits"="2"
@@ -169,13 +205,13 @@ WINE REGISTRY Version 2
 "sTimeFormat"="h:mm:ss tt"
 "sYearMonth"="MMMM yyyy"
 
-[Control Panel\\International\\Geo] 1793632162
-#time=1dd6adc247cedbe
+[Control Panel\\International\\Geo] 1793634591
+#time=1dd6ae1cbfb1b24
 "Name"="US"
 "Nation"="244"
 
-[Control Panel\\International\\\xd83c\xdf0e\xd83c\xdf0f\xd83c\xdf0d] 1793632162
-#time=1dd6adc247ce45e
+[Control Panel\\International\\\xd83c\xdf0e\xd83c\xdf0f\xd83c\xdf0d] 1793634591
+#time=1dd6ae1cbfb1674
 "Currencies"="USD"
 
 [Control Panel\\Keyboard] 1791559458
@@ -208,8 +244,8 @@ WINE REGISTRY Version 2
 "TEMP"="C:\\users\\steamuser\\AppData\\Local\\Temp"
 "TMP"="C:\\users\\steamuser\\AppData\\Local\\Temp"
 
-[Keyboard Layout\\Preload] 1793632162
-#time=1dd6adc2488849e
+[Keyboard Layout\\Preload] 1793634591
+#time=1dd6ae1cc00b43a
 "1"="00000409"
 
 [Software\\Microsoft\\Internet Explorer\\Main] 1791559462
@@ -650,11 +686,11 @@ WINE REGISTRY Version 2
 
 [Software\\PopCap] 1793632163
 #time=1dd6adc24a50d9e
-#class="Key"
+#class="Key\0\0\0"
 
-[Software\\PopCap\\PlantsVsZombies] 1793632262
-#time=1dd6adc5fd57dae
-#class="Key"
+[Software\\PopCap\\PlantsVsZombies] 1793634664
+#time=1dd6ae1f7503d18
+#class="Key\0\0\0"
 "CurUser"="P2"
 "CustomCursors"=dword:00000000
 "InProgress"=dword:00000000
@@ -891,8 +927,8 @@ WINE REGISTRY Version 2
 #time=1dd6adc24f0f61e
 "guid"=hex:32,c3,de,a4,93,1b,4a,44,ab,62,7a,21,7a,e0,96,1d
 
-[Software\\Wine\\Fonts] 1793632162
-#time=1dd6adc247d0c86
+[Software\\Wine\\Fonts] 1793634591
+#time=1dd6ae1cbfb2c54
 "Codepages"="1252,437"
 "LogPixels"=dword:00000060
 

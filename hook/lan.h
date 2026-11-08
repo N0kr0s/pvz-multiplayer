@@ -16,3 +16,10 @@ void lanHost(LanService*, int role);
 void lanJoin(LanService*, const char* ipv4, unsigned short port);
 void lanStop(LanService*);
 LanSnapshot lanSnapshot(LanService*);
+
+#include "match-state.h"
+struct LanEvent {unsigned type,value,nonce;};
+bool lanSendEvent(LanService*,unsigned type,unsigned value,unsigned nonce);
+bool lanPollEvent(LanService*,LanEvent*);
+bool lanPublishState(LanService*,const Match::StateData&);
+bool lanReadState(LanService*,Match::StateData*);

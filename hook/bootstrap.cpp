@@ -1,6 +1,13 @@
 #include <windows.h>
 #include <tlhelp32.h>
+#include "launch-args.h"
 static int fail(const char* message) { MessageBoxA(0,message,"PvZ Multiplayer loader",MB_ICONERROR); return 1; }
+static void failWindows(const char* action,const char* path,DWORD error){
+    char reason[512]={},message[1200];
+    FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,0,error,0,reason,sizeof(reason),0);
+    wsprintfA(message,"%s\r\n\r\nPath: %s\r\nWindows error %lu: %s",action,path,error,reason);
+    fail(message);
+}
 extern "C" void WINAPI Start() {
     char appid[32];
     if(!GetEnvironmentVariableA("SteamAppId",appid,sizeof(appid)) || lstrcmpA(appid,"3590")) {
@@ -16,14 +23,18 @@ extern "C" void WINAPI Start() {
     char* last=directory; for(char* p=directory;*p;++p) if(*p=='\\' || *p=='/') last=p;
     *last=0;
     lstrcpyA(dll,directory); lstrcatA(dll,"\\pvzmp-hook.dll");
+    // The same executable also ships as multiplayer/start-windows.exe for
+    // direct Steam launch options; its hook binaries live one folder below.
+    if(GetFileAttributesA(dll)==INVALID_FILE_ATTRIBUTES){
+        char nested[MAX_PATH];lstrcpyA(nested,directory);lstrcatA(nested,"\\hook\\pvzmp-hook.dll");
+        if(GetFileAttributesA(nested)!=INVALID_FILE_ATTRIBUTES){lstrcatA(directory,"\\hook");lstrcpyA(dll,nested);}
+    }
     // Always use the widescreen launcher: it applies runtime display patches.
     // Test instances isolate the prefix, not the executable launch chain.
     lstrcpyA(exe,directory); lstrcatA(exe,"\\..\\..\\PlantsVsZombies.exe");
     lstrcpyA(command,"\""); lstrcatA(command,exe); lstrcatA(command,"\"");
     // Preserve Steam's game arguments, including legacy PopCap Steam parameters.
-    const char* args=GetCommandLineA();
-    if(*args=='"') { ++args; while(*args && *args!='"') ++args; if(*args) ++args; }
-    else while(*args && *args!=' ' && *args!='\t') ++args;
+    const char* args=LaunchArgs::gameArguments(GetCommandLineA());
     if(lstrlenA(command)+lstrlenA(args)+1>=sizeof(command)) {
         fail("Game command line is too long."); ExitProcess(1);
     }
@@ -35,6 +46,21 @@ extern "C" void WINAPI Start() {
     if(testMode){lstrcatA(logPath,"test-");lstrcatA(logPath,testInstance);}else lstrcatA(logPath,"hook");
     lstrcatA(logPath,".log");
     SetEnvironmentVariableA("PVZMP_LOG_PATH",logPath);
+    // Linux/Proton and Windows both install newly registered map resources
+    // before starting the widescreen launcher. Already-patched PAKs are a no-op.
+    char installer[MAX_PATH],installCommand[MAX_PATH+4];
+    char relativeInstaller[MAX_PATH];lstrcpyA(relativeInstaller,directory);lstrcatA(relativeInstaller,"\\..\\install-menu.exe");
+    DWORD pathLength=GetFullPathNameA(relativeInstaller,MAX_PATH,installer,0);
+    if(!pathLength || pathLength>=MAX_PATH){fail("Cannot resolve installer path.");ExitProcess(1);}
+    if(GetFileAttributesA(installer)==INVALID_FILE_ATTRIBUTES){failWindows("Resource installer is missing. Extract the complete mod archive.",installer,GetLastError());ExitProcess(1);}
+    lstrcpyA(installCommand,"\"");lstrcatA(installCommand,installer);lstrcatA(installCommand,"\"");
+    PROCESS_INFORMATION installProcess={};
+    if(!CreateProcessA(installer,installCommand,0,0,FALSE,0,0,gameDir,&startup,&installProcess)){
+        failWindows("Cannot start the resource installer.",installer,GetLastError());ExitProcess(1);
+    }
+    WaitForSingleObject(installProcess.hProcess,INFINITE);DWORD installResult=1;
+    GetExitCodeProcess(installProcess.hProcess,&installResult);CloseHandle(installProcess.hThread);CloseHandle(installProcess.hProcess);
+    if(installResult)ExitProcess(1);
     if(!CreateProcessA(exe,command,0,0,FALSE,0,0,gameDir,&startup,&process)) {
         fail("Could not start PlantsVsZombies.exe."); ExitProcess(1);
     }
